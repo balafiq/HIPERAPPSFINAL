@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hiper Apps</title>
+<meta name="theme-color" content="#0f5a32">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    display: flex;
+    flex-direction: column;
+    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #f7f4ee;
+  }
+  .topbar {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, #0b3d22, #0f5a32);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: #1f9d4c;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: .92rem;
+    white-space: nowrap;
+    transition: background .2s ease;
+  }
+  .back:hover, .back:focus-visible { background: #9ccc1f; color: #0b3d22; outline: none; }
+  .topbar img { height: 36px; width: auto; }
+  .title {
+    flex: 1;
+    min-width: 0;
+    font-weight: 700;
+    font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  iframe {
+    flex: 1 1 auto;
+    width: 100%;
+    border: 0;
+    background: #fff;
+  }
+  .error { padding: 40px 20px; text-align: center; }
+  @media (max-width: 520px) {
+    .topbar img { display: none; }
+    .back { padding: 7px 12px; font-size: .85rem; }
+    .title { font-size: .9rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <a class="back" href="./">&larr; Kembali</a>
+    <img src="assets/logo.png" alt="Hiper Apps">
+    <span class="title" id="title">Hiper Apps</span>
+  </div>
+  <script>
+    // Only these apps may be loaded here, so the page can't be used to frame other sites.
+    var APPS = {
+      "semak-racun":  { name: "Semak Racun Berdaftar",   url: "https://balafiq.github.io/detect-racun/" },
+      "daftar-racun": { name: "Daftar Penggunaan Racun", url: "https://balafiq.github.io/daftar-guna-acun/" },
+      "jana-resit":   { name: "Jana Resit",              url: "https://balafiq.github.io/sistemresit/" },
+      "hubungi-apt":  { name: "Hubungi APT",             url: "https://balafiq.github.io/hubungi-apt/" }
+    };
+    var key = new URLSearchParams(location.search).get("app");
+    var app = Object.prototype.hasOwnProperty.call(APPS, key) ? APPS[key] : null;
+    if (app) {
+      document.title = app.name + " – Hiper Apps";
+      document.getElementById("title").textContent = app.name;
+      var f = document.createElement("iframe");
+      f.src = app.url;
+      f.title = app.name;
+      f.allow = "camera; microphone; geolocation; clipboard-read; clipboard-write; fullscreen; web-share";
+      document.body.appendChild(f);
+    } else {
+      var d = document.createElement("div");
+      d.className = "error";
+      d.innerHTML = 'Aplikasi tidak dijumpai. <a href="./">Kembali ke Hiper Apps</a>';
+      document.body.appendChild(d);
+    }
+  </script>
+</body>
+</html>
